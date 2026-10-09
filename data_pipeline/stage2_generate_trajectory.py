@@ -384,7 +384,7 @@ def execute_text_search(parameters):
         for attempt in range(MAX_RETRIES + 1):
             try:
                 serper_response = requests.post(
-                    "https://google.serper.dev/search",
+                    f'{os.getenv("SERPER_BASE_URL", "https://google.serper.dev").rstrip("/")}/search',
                     headers=serper_headers,
                     json=serper_payload,
                     timeout=60
@@ -573,7 +573,7 @@ def execute_search_image(parameters):
     if not query:
         return "Error: 'q' parameter is required for search_image", {}
 
-    url = "https://google.serper.dev/images"
+    url = f'{os.getenv("SERPER_BASE_URL", "https://google.serper.dev").rstrip("/")}/images'
     headers = {
         "X-API-KEY": SERPER_API_KEY,
         "Content-Type": "application/json",
